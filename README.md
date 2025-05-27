@@ -2,7 +2,7 @@
 
 ![Java](https://img.shields.io/badge/Java-17-blue)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+
 
 A comprehensive expense tracking application built with Spring Boot.
 
