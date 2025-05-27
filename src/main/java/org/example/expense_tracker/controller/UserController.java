@@ -27,7 +27,7 @@ public class UserController {
 
     // Find User by userName
     @GetMapping("/filter/username")
-    public List<User> findByUserName(@RequestParam String username){
+    public User findByUserName(@RequestParam String username){
         return userService.getUserByEmail(username);
     }
 

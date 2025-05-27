@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u where u.username = :username")
-    List<User> findByUsername(@Param("username") String username);
+    User findByUsername(@Param("username") String username);
 }

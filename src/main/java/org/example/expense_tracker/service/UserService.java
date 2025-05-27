@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public List<User> getUserByEmail(String userName){
+    public User getUserByEmail(String userName){
         return userRepository.findByUsername(userName);
     }
 }
