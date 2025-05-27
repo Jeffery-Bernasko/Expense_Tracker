@@ -17,3 +17,4 @@ A comprehensive expense tracking application built with Spring Boot.
 - Spring Boot 3.x
 - Spring Security
 - PostgreSQL
+- Spring Data JPA
