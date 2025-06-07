@@ -1,7 +1,9 @@
 package org.example.expense_tracker.controller;
 
+import org.example.expense_tracker.dto.UserRegistrationDTO;
 import org.example.expense_tracker.model.User;
 import org.example.expense_tracker.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,13 @@ public class UserController {
     @PostMapping
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
+    }
+
+    //Create User using DTO
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationDTO dto){
+        userService.registerUSer(dto);
+        return ResponseEntity.ok("User Registered successfully");
     }
 
     @GetMapping("/{id}")

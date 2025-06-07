@@ -10,6 +10,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
@@ -21,6 +22,10 @@ public class Role {
     public Role(String name, Set<User> users) {
         this.name = name;
         this.users = users;
+    }
+
+    public Role(String roleUser) {
+        this.name = roleUser;
     }
 
     public Long getId() {
