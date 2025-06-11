@@ -8,6 +8,8 @@ import org.example.expense_tracker.model.Expense;
 import org.example.expense_tracker.model.User;
 import org.example.expense_tracker.repository.ExpenseRepository;
 import org.example.expense_tracker.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,20 +42,25 @@ public class ExpenseService {
     }
 
 
-    /*public Expense createExpense(Expense expense){
-        return expenseRepository.save(expense);
-    }*/
+
 
     public ExpenseResponseDTO createExpense(ExpenseRequestDTO expenseRequestDTO) {
-        // First get the existing user
-        Expense expense = expenseRepository.findById(expenseRequestDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Expense not found with id: "));
 
+        Expense expense = new Expense();
 
+        // Get Authenticated username and create an expense
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username);
 
+        expense.setTitle(expenseRequestDTO.getTitle());
+        expense.setCategory(expenseRequestDTO.getCategory());
+        expense.setAmount(expenseRequestDTO.getAmount());
+        expense.setDescription(expenseRequestDTO.getDescription());
         if (expense.getDate() == null) {
             expense.setDate(LocalDate.now());
         }
+        expense.setUser(user);
 
         Expense savedExpense = expenseRepository.save(expense);
         return ExpenseMapper.toDTO(savedExpense);
