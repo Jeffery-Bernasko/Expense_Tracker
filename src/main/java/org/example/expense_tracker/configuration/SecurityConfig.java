@@ -38,9 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/users/register").permitAll()
                 .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
