@@ -5,6 +5,7 @@ import org.example.expense_tracker.model.Role;
 import org.example.expense_tracker.model.User;
 import org.example.expense_tracker.repository.RoleRepository;
 import org.example.expense_tracker.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -16,10 +17,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    // Add the encoded password
+    private final PasswordEncoder passwordEncoder;
+
     public UserService(UserRepository userRepository,
-                       RoleRepository roleRepository){
+                       RoleRepository roleRepository, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Find all users
@@ -39,12 +44,17 @@ public class UserService {
         }
 
         // Set the Role for user
-        Role userRole = new Role("ROLE_USER");
-        roleRepository.save(userRole);
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        if(userRole == null){
+            userRole = new Role("ROLE_USER");
+            roleRepository.save(userRole);
+        }
+
 
         User user = new User();
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        //user.setPassword(dto.getPassword());
         user.setRoles(Set.of(userRole));
 
         userRepository.save(user);
